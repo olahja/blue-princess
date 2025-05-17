@@ -1,47 +1,120 @@
 <script>
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import { quadIn, quadOut, elasticOut } from "svelte/easing";
+  import Test from "./Test.svelte";
+  import background from "./assets/background/background_plain.png";
+  import title from "./assets/background/title.png";
+  import { fade , fly} from "svelte/transition";
+  import CharacterCreator from "./lib/CharacterCreator.svelte";
+
+  // let enterOpts = {
+  //   inDelay: 1000,
+  //   inDuration: 8000,
+  //   outDuration: 2000,
+  // };
+  let enterOpts = {
+    inDelay: 100,
+    inDuration: 800,
+    outDuration: 200,
+  };
+
+  let introOver = $state(false);
+  let characterCreation = $state({
+    hasStarted: false,
+  });
 </script>
 
+<!-- <Test /> -->
 <main>
-  <div>
-    <a href="https://vite.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+  <div class="background-container" style:background-image="url({background})">
+    <!-- svelte-ignore a11y_img_redundant_alt -->
+
+    {#if !introOver}
+      <img
+        in:fade|global={{
+          duration: enterOpts.inDuration,
+          delay: enterOpts.inDelay,
+          easing: quadIn,
+        }}
+        out:fade|global={{
+          duration: enterOpts.outDuration,
+          easing: quadOut,
+        }}
+        class="title"
+        src={title}
+        alt="Description of my image"
+      />
+    {/if}
+    {#if characterCreation.hasStarted}
+        <div class="character-creator-container"
+        in:fly|global={{
+          y: -600,
+          duration: 2000,
+          delay: enterOpts.outDuration,
+          easing: elasticOut,
+        }}
+        >
+        
+        <CharacterCreator />
+
+        </div>
+    {/if}
   </div>
-  <h1>Vite + Svelte hej</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  {#if !introOver}
+    <div
+      class="button-container"
+      in:fade|global={{
+        duration: 1000,
+        delay: enterOpts.inDuration,
+        easing: quadIn,
+      }}
+      out:fade|global={{
+        duration: 1000,
+        easing: quadOut,
+      }}
+    >
+      <button
+        color="blue"
+        onclick={() => {
+          introOver = true;
+          characterCreation.hasStarted = true;
+        }}>Start</button
+      >
+    </div>
+  {/if}
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  main {
+    /* padding-top: 60px; */
+    width: 100%;
+    /* display: flex; */
+    margin: 0 auto;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+  .button-container {
+    display: flex;
+    justify-content: center;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
+  .title {
+    width: 100%;
+    position: absolute;
+    top: 5%;
   }
-  .read-the-docs {
-    color: #888;
+  .character-creator-container {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+  }
+
+  .background-container {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    max-width: 600px;
+    height: 500px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
   }
 </style>
