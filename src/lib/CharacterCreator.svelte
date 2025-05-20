@@ -2,7 +2,7 @@
     let index = $state(0);
 
     
-    let {characters, heading} = $props();
+    let {characters, heading, confirmCallback} = $props();
 
     const characterDescriptions = {
         cleaner: {
@@ -70,7 +70,7 @@
         {/each}
     </div>
     <div class="button-container">
-        <button disabled={selectedCharacter == undefined}>Confirm</button>
+        <button disabled={selectedCharacter == undefined} onclick={() => confirmCallback(selectedCharacter)}>Confirm</button>
     </div>
 </div>
 

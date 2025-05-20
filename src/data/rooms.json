@@ -1,0 +1,115 @@
+{
+    "stairwell": {
+        "name": "Stairwell",
+        "connections": [
+            {
+                "direction": "left",
+                "buttonPos": {
+                    "top": "50%",
+                    "left": "20%"
+                },
+                "draftable": ["hallway"],
+                "drafted": null
+            },
+            {
+                "direction": "up",
+                "buttonPos": {
+                    "top": "20%",
+                    "left": "50%"
+                },
+                "draftable": ["attic", "basement", "workshop"],
+                "drafted": null
+            },
+            {
+                "direction": "down",
+                "buttonPos": {
+                    "top": "55%",
+                    "left": "80%"
+                },
+                "draftable": ["attic", "basement", "workshop"],
+                "drafted": null
+            },
+            {
+                "direction": "back",
+                "buttonPos": {
+                    "top": "90%",
+                    "left": "50%"
+                },
+                "draftable": ["attic", "basement", "workshop"],
+                "drafted": null
+            }
+        ]
+    },
+    "hallway": {
+        "name": "Hallway",
+        "desc": "A magical pathway to further rooms",
+        "connections": [
+            {
+                "direction": "immediate_left",
+                "draftable": null,
+                "drafted": "stairwell"
+            },
+            {
+                "direction": "far_left",
+                "draftable": ["bedroom", "kitchen", "bathroom", "livingroom", "storage"],
+                "drafted": null
+            },
+            {
+                "direction": "front",
+                "draftable": ["bedroom", "kitchen", "bathroom", "livingroom", "storage"],
+                "drafted": null
+            
+            },
+            {
+                "direction": "back",
+                "draftable": ["bedroom", "kitchen", "bathroom", "livingroom", "storage"],
+                "drafted": null
+            },
+            {
+                "direction": "right",
+                "draftable": ["bedroom", "kitchen", "bathroom", "livingroom", "storage"],
+                "drafted": null
+            }
+        ]
+    },
+    "kitchen": {
+        "name": "Kitchen",
+        "connections": [
+            {
+                "direction": "back",
+                "draftable": null,
+                "drafted": "hallway"
+            }
+        ]
+    },
+    "bedroom": {
+        "name": "Bedroom",
+        "connections": [
+            {
+                "direction": "back",
+                "draftable": null,
+                "drafted": "hallway"
+            }
+        ]
+    },
+    "livingroom": {
+        "name": "Living room",
+        "connections": [
+            {
+                "direction": "back",
+                "draftable": null,
+                "drafted": "hallway"
+            }
+        ]
+    },
+    "storage": {
+        "name": "Storage",
+        "connections": [
+            {
+                "direction": "back",
+                "draftable": null,
+                "drafted": "hallway"
+            }
+        ]
+    }
+}

@@ -2,95 +2,116 @@
   import { quadIn, quadOut, elasticOut } from "svelte/easing";
   import Test from "./Test.svelte";
   import background from "./assets/background/background_plain.png";
-  import title from "./assets/background/title.png";
   import { fade, fly } from "svelte/transition";
-  import CharacterCreator from "./lib/CharacterCreator.svelte";
+  import Decorations from "./lib/Decorations.svelte";
+  import _roomData from "./data/rooms.json";
+  import Intro from "./lib/Intro.svelte";
+  
+  import CharacterCreatorWrapper from "./lib/CharacterCreatorWrapper.svelte";
+    import DraftWindow from "./lib/DraftWindow.svelte";
+
+  // let enterOpts = {
+  //   inDelay: 1000,
+  //   inDuration: 8000,
+  //   outDuration: 2000,
+  // };
+
+  const baseSpeed = 1000
 
   let enterOpts = {
-    inDelay: 1000,
-    inDuration: 8000,
-    outDuration: 2000,
+    inDelay: baseSpeed / 10,
+    inDuration: baseSpeed * 0.8,
+    outDuration: baseSpeed * 0.2 ,
   };
-  // let enterOpts = {
-  //   inDelay: 100,
-  //   inDuration: 800,
-  //   outDuration: 200,
-  // };
 
   let introOver = $state(false);
   let characterCreation = $state({
-    hasStarted: false,
+    active: false,
+    selectedCharacter: undefined,
+    selectedSidekick: undefined,
+  });
+  let gameState = $state({
+    promptBegin: false,
+    begun: true,
+    explore: false,
   });
 
-  const mainCharacters = import.meta.glob(
-    "./assets/characters/main/*.{png,jpg,jpeg,svg}",
-    {
-      eager: true,
-      as: "url",
-    },
+  function updateGameState(key, value) {
+    gameState[key] = value;
+  }
+
+  const roomPics = import.meta.glob("./assets/rooms/*.{png,jpg,jpeg,svg}", {
+    eager: true,
+    as: "url",
+  });
+
+  let selectedRoom = $state("outside");
+
+  let roomData = $state(_roomData)
+
+  let currentBackground = $derived(
+    selectedRoom == "outside"
+      ? background
+      : roomPics[`./assets/rooms/${selectedRoom}.png`],
   );
-  const sidekicks = import.meta.glob(
-    "./assets/characters/sidekick/*.{png,jpg,jpeg,svg}",
-    {
-      eager: true,
-      as: "url",
-    },
-  );
+  // $inspect({ rooms });
+
+  function updateRoomData(roomKey) {
+    roomData[roomKey]
+  }
+
+  let draftSettings = $state();
+
+  function updateDraftSettings(draftable, direction) {
+    draftSettings = {draftable: draftable, direction: direction}
+  }
+  function draftRoom(room) {
+        roomData[selectedRoom].connections.find(d => d.direction == draftSettings.direction).drafted = room;
+        draftSettings.set(undefined);
+        selectedRoom = room;
+    }
+
+  // console.log({mainCharacters: mainCharacterPics})
 </script>
 
 <!-- <Test /> -->
 <main>
-  <div class="background-container" style:background-image="url({background})">
+  <div
+    class="background-container"
+    style:background-image="url({currentBackground})"
+  >
     <!-- svelte-ignore a11y_img_redundant_alt -->
 
     {#if !introOver}
-      <div
-        class="title"
-        in:fade|global={{
-          duration: enterOpts.inDuration,
-          delay: enterOpts.inDelay,
-          easing: quadIn,
-        }}
-        out:fade|global={{
-          duration: enterOpts.outDuration,
-          easing: quadOut,
-        }}
-      >
-        <img src={title} alt="Description of my image" />
-        <span>– a very short minigame</span>
-      </div>
+      <Intro {enterOpts} />
     {/if}
-    {#if characterCreation.hasStarted}
-      <div
-        class="character-creator-container"
-        in:fly|global={{
-          y: -600,
-          duration: 2000,
-          delay: enterOpts.outDuration,
-          easing: elasticOut,
-        }}
-        out:fly|global={{
-          y: 600,
-          duration: 750,
-          delay: enterOpts.outDuration,
-          easing: quadIn,
-        }}
-      >
-        <CharacterCreator characters={mainCharacters} heading={"Pick your character:"} />
-        <!-- <CharacterCreator characters={sidekicks} heading={"Pick your sidekick:"} /> -->
-      </div>
+    <!-- <div class="cc-outer"> -->
+    {#if characterCreation.active}
+      <CharacterCreatorWrapper
+        {baseSpeed}
+        {characterCreation}
+        {enterOpts}
+        {updateGameState}
+      />
+    {/if}
+    {#if gameState.explore}
+      <Decorations {selectedRoom} {roomData} {updateRoomData} {updateDraftSettings} />
+    {/if}
+    {#if draftSettings}
+      <DraftWindow {roomPics} {draftSettings} {baseSpeed} {roomData} confirmCallback={draftRoom} />
     {/if}
   </div>
+  <!-- </div> -->
   {#if !introOver}
     <div
       class="button-container"
       in:fade|global={{
-        duration: 1000,
+        duration: baseSpeed,
         delay: enterOpts.inDuration,
         easing: quadIn,
       }}
       out:fade|global={{
-        duration: 1000,
+        duration: baseSpeed,
         easing: quadOut,
       }}
     >
@@ -98,8 +119,31 @@
         color="blue"
         onclick={() => {
           introOver = true;
-          characterCreation.hasStarted = true;
+          characterCreation.active = true;
         }}>Start</button
+      >
+    </div>
+  {/if}
+  {#if gameState.promptBegin}
+    <div
+      class="button-container"
+      in:fade|global={{
+        duration: baseSpeed,
+        delay: enterOpts.inDuration,
+        easing: quadIn,
+      }}
+      out:fade|global={{
+        duration: baseSpeed,
+        easing: quadOut,
+      }}
+    >
+      <button
+        color="blue"
+        onclick={() => {
+          gameState.promptBegin = false;
+          selectedRoom = "stairwell";
+          gameState.explore = true;
+        }}>Enter</button
       >
     </div>
   {/if}
@@ -115,22 +159,6 @@
   .button-container {
     display: flex;
     justify-content: center;
-  }
-  .title {
-    width: 100%;
-    position: absolute;
-    top: 5%;
-    text-align: center;
-    font-style: italic;
-    line-height: 1;
-    img {
-      width: 100%;
-    }
-  }
-  .character-creator-container {
-    width: 100%;
-    height: 100%;
-    padding: 1rem;
   }
 
   .background-container {
