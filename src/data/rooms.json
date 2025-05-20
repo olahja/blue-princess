@@ -1,6 +1,7 @@
 {
     "stairwell": {
         "name": "Stairwell",
+        "desc": "A magical pathway to further rooms",
         "connections": [
             {
                 "direction": "left",
@@ -8,7 +9,9 @@
                     "top": "50%",
                     "left": "20%"
                 },
-                "draftable": ["hallway"],
+                "draftable": [
+                    "hallway"
+                ],
                 "drafted": null
             },
             {
@@ -17,7 +20,11 @@
                     "top": "20%",
                     "left": "50%"
                 },
-                "draftable": ["attic", "basement", "workshop"],
+                "draftable": [
+                    "attic",
+                    "basement",
+                    "workshop"
+                ],
                 "drafted": null
             },
             {
@@ -26,7 +33,11 @@
                     "top": "55%",
                     "left": "80%"
                 },
-                "draftable": ["attic", "basement", "workshop"],
+                "draftable": [
+                    "attic",
+                    "basement",
+                    "workshop"
+                ],
                 "drafted": null
             },
             {
@@ -35,7 +46,11 @@
                     "top": "90%",
                     "left": "50%"
                 },
-                "draftable": ["attic", "basement", "workshop"],
+                "draftable": [
+                    "attic",
+                    "basement",
+                    "workshop"
+                ],
                 "drafted": null
             }
         ]
@@ -46,37 +61,100 @@
         "connections": [
             {
                 "direction": "immediate_left",
+                "buttonPos": {
+                    "top": "80%",
+                    "left": "10%"
+                },
                 "draftable": null,
                 "drafted": "stairwell"
             },
             {
                 "direction": "far_left",
-                "draftable": ["bedroom", "kitchen", "bathroom", "livingroom", "storage"],
+                "buttonPos": {
+                    "top": "50%",
+                    "left": "20%"
+                },
+                "draftable": [
+                    "bedroom",
+                    "kitchen",
+                    "bathroom",
+                    "livingroom",
+                    "storage"
+                ],
                 "drafted": null
             },
             {
                 "direction": "front",
-                "draftable": ["bedroom", "kitchen", "bathroom", "livingroom", "storage"],
+                "buttonPos": {
+                    "top": "35%",
+                    "left": "50%"
+                },
+                "draftable": [
+                    "bedroom",
+                    "kitchen",
+                    "bathroom",
+                    "livingroom",
+                    "storage"
+                ],
                 "drafted": null
-            
             },
             {
                 "direction": "back",
-                "draftable": ["bedroom", "kitchen", "bathroom", "livingroom", "storage"],
+                "buttonPos": {
+                    "top": "95%",
+                    "left": "50%"
+                },
+                "draftable": [
+                    "bedroom",
+                    "kitchen",
+                    "bathroom",
+                    "livingroom",
+                    "storage"
+                ],
                 "drafted": null
             },
             {
-                "direction": "right",
-                "draftable": ["bedroom", "kitchen", "bathroom", "livingroom", "storage"],
+                "direction": "immediate_right",
+                "buttonPos": {
+                    "top": "75%",
+                    "left": "90%"
+                },
+                "draftable": [
+                    "bedroom",
+                    "kitchen",
+                    "bathroom",
+                    "livingroom",
+                    "storage"
+                ],
+                "drafted": null
+            },
+            {
+                "direction": "far_right",
+                "buttonPos": {
+                    "top": "45%",
+                    "left": "80%"
+                },
+                "draftable": [
+                    "bedroom",
+                    "kitchen",
+                    "bathroom",
+                    "livingroom",
+                    "storage"
+                ],
                 "drafted": null
             }
         ]
     },
     "kitchen": {
         "name": "Kitchen",
+        "desc": "Home of the new fridge",
         "connections": [
             {
                 "direction": "back",
+                "buttonPos": {
+                    "top": "90%",
+                    "left": "50%"
+                },
                 "draftable": null,
                 "drafted": "hallway"
             }
@@ -84,9 +162,14 @@
     },
     "bedroom": {
         "name": "Bedroom",
+        "desc": "A place for dreams",
         "connections": [
             {
                 "direction": "back",
+                "buttonPos": {
+                    "top": "90%",
+                    "left": "50%"
+                },
                 "draftable": null,
                 "drafted": "hallway"
             }
@@ -94,9 +177,14 @@
     },
     "livingroom": {
         "name": "Living room",
+        "desc": "Where the couch lives",
         "connections": [
             {
                 "direction": "back",
+                "buttonPos": {
+                    "top": "90%",
+                    "left": "50%"
+                },
                 "draftable": null,
                 "drafted": "hallway"
             }
@@ -104,11 +192,76 @@
     },
     "storage": {
         "name": "Storage",
+        "desc": "Legend says it once was a bedroom",
         "connections": [
             {
                 "direction": "back",
+                "buttonPos": {
+                    "top": "90%",
+                    "left": "50%"
+                },
                 "draftable": null,
                 "drafted": "hallway"
+            }
+        ]
+    },
+    "bathroom": {
+        "name": "Bathroom",
+        "desc": "Seldom used for bathing, to be honest",
+        "connections": [
+            {
+                "direction": "back",
+                "buttonPos": {
+                    "top": "90%",
+                    "left": "50%"
+                },
+                "draftable": null,
+                "drafted": "hallway"
+            }
+        ]
+    },
+    "attic": {
+        "name": "Attic",
+        "desc": "Tires, moths and suitcases",
+        "connections": [
+            {
+                "direction": "back",
+                "buttonPos": {
+                    "top": "90%",
+                    "left": "50%"
+                },
+                "draftable": null,
+                "drafted": "stairwell"
+            }
+        ]
+    },
+    "basement": {
+        "name": "Basement",
+        "desc": "Jam and wine storage",
+        "connections": [
+            {
+                "direction": "back",
+                "buttonPos": {
+                    "top": "90%",
+                    "left": "50%"
+                },
+                "draftable": null,
+                "drafted": "stairwell"
+            }
+        ]
+    },
+    "workshop": {
+        "name": "Workshop",
+        "desc": "The sidekick's favourite",
+        "connections": [
+            {
+                "direction": "back",
+                "buttonPos": {
+                    "top": "90%",
+                    "left": "50%"
+                },
+                "draftable": null,
+                "drafted": "stairwell"
             }
         ]
     }

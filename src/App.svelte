@@ -62,12 +62,19 @@
 
   let draftSettings = $state();
 
+  let draftedRooms = $state(["stairwell"]);
+
+  function updateSelectedRoom(room) {
+    selectedRoom = room
+  }
+
   function updateDraftSettings(draftable, direction) {
     draftSettings = {draftable: draftable, direction: direction}
   }
   function draftRoom(room) {
         roomData[selectedRoom].connections.find(d => d.direction == draftSettings.direction).drafted = room;
-        draftSettings.set(undefined);
+        draftedRooms.push(room)
+        draftSettings = undefined;
         selectedRoom = room;
     }
 
@@ -94,11 +101,11 @@
         {updateGameState}
       />
     {/if}
-    {#if gameState.explore}
-      <Decorations {selectedRoom} {roomData} {updateRoomData} {updateDraftSettings} />
+    {#if gameState.explore && !draftSettings}
+      <Decorations {selectedRoom} {roomData} {updateRoomData} {updateDraftSettings} {updateSelectedRoom} />
     {/if}
     {#if draftSettings}
-      <DraftWindow {roomPics} {draftSettings} {baseSpeed} {roomData} confirmCallback={draftRoom} />
+      <DraftWindow {roomPics} {draftSettings} {baseSpeed} {roomData} confirmCallback={draftRoom} {draftedRooms} />
     {/if}
   </div>
   <!-- </div> -->
@@ -155,6 +162,7 @@
     width: 100%;
     /* display: flex; */
     margin: 0 auto;
+    overflow-x:hidden;
   }
   .button-container {
     display: flex;
