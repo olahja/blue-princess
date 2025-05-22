@@ -1,4 +1,5 @@
 <script>
+    import footsteps from "../assets/misc/footsteps.svg";
     let {
         selectedRoom,
         roomData,
@@ -19,7 +20,7 @@
             c.drafted
                 ? updateSelectedRoom(c.drafted)
                 : updateDraftSettings(c.draftable, c.direction)}
-        >{c.direction}</button
+        ><img style:transform="rotate({c.buttonPos.rotation}deg)" class="steps" src={footsteps} alt="footsteps" /></button
     >
 {/each}
 
@@ -27,5 +28,14 @@
     .connection {
         position: absolute;
         transform: translate(-50%, -50%);
+    }
+    .steps {
+        width: 30px;
+        opacity: 1;
+        transform-origin: center;
+
+    }
+    button {
+        background: none;
     }
 </style>

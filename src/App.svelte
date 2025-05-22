@@ -1,6 +1,6 @@
 <script>
   import { quadIn, quadOut, elasticOut } from "svelte/easing";
-  import Test from "./Test.svelte";
+  // import Test from "./Test.svelte";
   import background from "./assets/background/background_plain.png";
   import { fade, fly } from "svelte/transition";
   import Decorations from "./lib/Decorations.svelte";

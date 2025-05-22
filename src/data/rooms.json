@@ -7,7 +7,8 @@
                 "direction": "left",
                 "buttonPos": {
                     "top": "50%",
-                    "left": "20%"
+                    "left": "20%",
+                    "rotation": 270
                 },
                 "draftable": [
                     "hallway"
@@ -31,7 +32,8 @@
                 "direction": "down",
                 "buttonPos": {
                     "top": "55%",
-                    "left": "80%"
+                    "left": "80%",
+                    "rotation": 270
                 },
                 "draftable": [
                     "attic",
@@ -44,7 +46,8 @@
                 "direction": "back",
                 "buttonPos": {
                     "top": "90%",
-                    "left": "50%"
+                    "left": "50%",
+                    "rotation": 180
                 },
                 "draftable": [
                     "attic",
@@ -63,7 +66,8 @@
                 "direction": "immediate_left",
                 "buttonPos": {
                     "top": "80%",
-                    "left": "10%"
+                    "left": "10%",
+                    "rotation": 270
                 },
                 "draftable": null,
                 "drafted": "stairwell"
@@ -72,7 +76,8 @@
                 "direction": "far_left",
                 "buttonPos": {
                     "top": "50%",
-                    "left": "20%"
+                    "left": "30%",
+                    "rotation": 270
                 },
                 "draftable": [
                     "bedroom",
@@ -86,7 +91,7 @@
             {
                 "direction": "front",
                 "buttonPos": {
-                    "top": "35%",
+                    "top": "40%",
                     "left": "50%"
                 },
                 "draftable": [
@@ -102,7 +107,8 @@
                 "direction": "back",
                 "buttonPos": {
                     "top": "95%",
-                    "left": "50%"
+                    "left": "50%",
+                    "rotation": 180
                 },
                 "draftable": [
                     "bedroom",
@@ -117,7 +123,8 @@
                 "direction": "immediate_right",
                 "buttonPos": {
                     "top": "75%",
-                    "left": "90%"
+                    "left": "90%",
+                    "rotation": 90
                 },
                 "draftable": [
                     "bedroom",
@@ -132,7 +139,8 @@
                 "direction": "far_right",
                 "buttonPos": {
                     "top": "45%",
-                    "left": "80%"
+                    "left": "65%",
+                    "rotation": 90
                 },
                 "draftable": [
                     "bedroom",
@@ -153,7 +161,8 @@
                 "direction": "back",
                 "buttonPos": {
                     "top": "90%",
-                    "left": "50%"
+                    "left": "50%",
+                    "rotation": 180
                 },
                 "draftable": null,
                 "drafted": "hallway"
@@ -168,7 +177,8 @@
                 "direction": "back",
                 "buttonPos": {
                     "top": "90%",
-                    "left": "50%"
+                    "left": "50%",
+                    "rotation": 180
                 },
                 "draftable": null,
                 "drafted": "hallway"
@@ -183,7 +193,8 @@
                 "direction": "back",
                 "buttonPos": {
                     "top": "90%",
-                    "left": "50%"
+                    "left": "50%",
+                    "rotation": 180
                 },
                 "draftable": null,
                 "drafted": "hallway"
@@ -198,7 +209,8 @@
                 "direction": "back",
                 "buttonPos": {
                     "top": "90%",
-                    "left": "50%"
+                    "left": "50%",
+                    "rotation": 180
                 },
                 "draftable": null,
                 "drafted": "hallway"
@@ -213,7 +225,8 @@
                 "direction": "back",
                 "buttonPos": {
                     "top": "90%",
-                    "left": "50%"
+                    "left": "50%",
+                    "rotation": 180
                 },
                 "draftable": null,
                 "drafted": "hallway"
@@ -228,7 +241,8 @@
                 "direction": "back",
                 "buttonPos": {
                     "top": "90%",
-                    "left": "50%"
+                    "left": "50%",
+                    "rotation": 180
                 },
                 "draftable": null,
                 "drafted": "stairwell"
@@ -243,7 +257,8 @@
                 "direction": "back",
                 "buttonPos": {
                     "top": "90%",
-                    "left": "50%"
+                    "left": "50%",
+                    "rotation": 180
                 },
                 "draftable": null,
                 "drafted": "stairwell"
@@ -258,7 +273,8 @@
                 "direction": "back",
                 "buttonPos": {
                     "top": "90%",
-                    "left": "50%"
+                    "left": "50%",
+                    "rotation": 180
                 },
                 "draftable": null,
                 "drafted": "stairwell"
