@@ -76,7 +76,7 @@
                 "direction": "far_left",
                 "buttonPos": {
                     "top": "50%",
-                    "left": "30%",
+                    "left": "40%",
                     "rotation": 270
                 },
                 "draftable": [
@@ -92,7 +92,7 @@
                 "direction": "front",
                 "buttonPos": {
                     "top": "40%",
-                    "left": "50%"
+                    "left": "55%"
                 },
                 "draftable": [
                     "bedroom",

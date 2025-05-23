@@ -173,7 +173,7 @@
     background-size: cover;
     background-position: center;
     position: relative;
-    max-width: 600px;
+    max-width: 400px;
     height: 600px;
     margin: 0 auto;
     display: flex;
