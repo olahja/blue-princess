@@ -6,9 +6,10 @@
   import Decorations from "./lib/Decorations.svelte";
   import _roomData from "./data/rooms.json";
   import Intro from "./lib/Intro.svelte";
-  
+  import ItemShowcaser from "./lib/ItemShowcaser.svelte";
+
   import CharacterCreatorWrapper from "./lib/CharacterCreatorWrapper.svelte";
-    import DraftWindow from "./lib/DraftWindow.svelte";
+  import DraftWindow from "./lib/DraftWindow.svelte";
 
   // let enterOpts = {
   //   inDelay: 1000,
@@ -16,12 +17,12 @@
   //   outDuration: 2000,
   // };
 
-  const baseSpeed = 1000
+  const baseSpeed = 100;
 
   let enterOpts = {
-    inDelay: baseSpeed / 10,
-    inDuration: baseSpeed * 0.8,
-    outDuration: baseSpeed * 0.2 ,
+    inDelay: baseSpeed * 2,
+    inDuration: baseSpeed * 4,
+    outDuration: baseSpeed * 2,
   };
 
   let introOver = $state(false);
@@ -47,7 +48,7 @@
 
   let selectedRoom = $state("outside");
 
-  let roomData = $state(_roomData)
+  let roomData = $state(_roomData);
 
   let currentBackground = $derived(
     selectedRoom == "outside"
@@ -57,7 +58,7 @@
   // $inspect({ rooms });
 
   function updateRoomData(roomKey) {
-    roomData[roomKey]
+    roomData[roomKey];
   }
 
   let draftSettings = $state();
@@ -65,18 +66,31 @@
   let draftedRooms = $state(["stairwell"]);
 
   function updateSelectedRoom(room) {
-    selectedRoom = room
+    selectedRoom = room;
   }
 
   function updateDraftSettings(draftable, direction) {
-    draftSettings = {draftable: draftable, direction: direction}
+    draftSettings = { draftable: draftable, direction: direction };
   }
   function draftRoom(room) {
-        roomData[selectedRoom].connections.find(d => d.direction == draftSettings.direction).drafted = room;
-        draftedRooms.push(room)
-        draftSettings = undefined;
-        selectedRoom = room;
-    }
+    roomData[selectedRoom].connections.find(
+      (d) => d.direction == draftSettings.direction,
+    ).drafted = room;
+    draftedRooms.push(room);
+    draftSettings = undefined;
+    selectedRoom = room;
+  }
+
+  let inventory = $state([]);
+  function getItem(item) {
+    roomData[selectedRoom].secrets.find((d) => d.id == item.id).found = true;
+    inventory.push(item);
+  }
+
+  let showcaseItem = $state();
+  function closeItemShowcase() {
+    showcaseItem = undefined;
+  }
 
   // console.log({mainCharacters: mainCharacterPics})
 </script>
@@ -85,6 +99,7 @@
 <main>
   <div
     class="background-container"
+    class:centered={selectedRoom == "kitchen"}
     style:background-image="url({currentBackground})"
   >
     <!-- svelte-ignore a11y_img_redundant_alt -->
@@ -102,10 +117,27 @@
       />
     {/if}
     {#if gameState.explore && !draftSettings}
-      <Decorations {selectedRoom} {roomData} {updateRoomData} {updateDraftSettings} {updateSelectedRoom} />
+      <Decorations
+        {selectedRoom}
+        {roomData}
+        {updateRoomData}
+        {updateDraftSettings}
+        {updateSelectedRoom}
+        {getItem}
+      />
     {/if}
     {#if draftSettings}
-      <DraftWindow {roomPics} {draftSettings} {baseSpeed} {roomData} confirmCallback={draftRoom} {draftedRooms} />
+      <DraftWindow
+        {roomPics}
+        {draftSettings}
+        {baseSpeed}
+        {roomData}
+        confirmCallback={draftRoom}
+        {draftedRooms}
+      />
+    {/if}
+    {#if showcaseItem}
+      <ItemShowcaser item={showcaseItem} {baseSpeed} />
     {/if}
   </div>
   <!-- </div> -->
@@ -114,7 +146,7 @@
       class="button-container"
       in:fade|global={{
         duration: baseSpeed,
-        delay: enterOpts.inDuration,
+        delay: enterOpts.inDuration + enterOpts.inDelay,
         easing: quadIn,
       }}
       out:fade|global={{
@@ -136,11 +168,11 @@
       class="button-container"
       in:fade|global={{
         duration: baseSpeed,
-        delay: enterOpts.inDuration,
+        delay: baseSpeed,
         easing: quadIn,
       }}
       out:fade|global={{
-        duration: baseSpeed,
+        duration: baseSpeed * 0.2,
         easing: quadOut,
       }}
     >
@@ -162,7 +194,7 @@
     width: 100%;
     /* display: flex; */
     margin: 0 auto;
-    overflow-x:hidden;
+    overflow-x: hidden;
   }
   .button-container {
     display: flex;
@@ -180,5 +212,8 @@
     align-items: center;
     justify-content: center;
     color: white;
+  }
+  .centered {
+    background-position: right !important;
   }
 </style>

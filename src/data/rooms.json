@@ -61,6 +61,16 @@
     "hallway": {
         "name": "Hallway",
         "desc": "A magical pathway to further rooms",
+        "secrets": [
+            {
+                "name": "test",
+                "found": false,
+                "buttonPos": {
+                    "top": "44%",
+                    "left": "77%"
+                }
+            }
+        ],
         "connections": [
             {
                 "direction": "immediate_left",
@@ -138,7 +148,7 @@
             {
                 "direction": "far_right",
                 "buttonPos": {
-                    "top": "45%",
+                    "top": "50%",
                     "left": "65%",
                     "rotation": 90
                 },
