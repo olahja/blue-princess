@@ -14,6 +14,14 @@
 
     $inspect({ itemPics });
     // let image = $derived()
+    let slots = [
+        {top: "18%", left: "45%", item: null},
+        {top: "40%", left: "45%", item: null},
+        {top: "61%", left: "45%", item: null},
+    ]
+    function handleSlotClick(slot) {
+        
+    }
 </script>
 
 <div
@@ -37,6 +45,12 @@
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
             <figure class:big={item.id == "secret_door"}>
+                {#if item.id == "secret_door"}
+                {#each slots as d }
+                    <button class="slot" style:top={d.top} style:left={d.left}></button>
+                    
+                {/each}
+                {/if}
                 <img src={itemSrc} />
                 <figcaption>
                     <h2>{item.name}</h2>
@@ -62,6 +76,17 @@
         position: absolute;
         /* display: flex;
         justify-content: center; */
+    }
+    .slot {
+        position:absolute;
+        height: 40px;
+        width: 40px;
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+
     }
     .room-selector-container {
         background: rgba(255, 255, 255, 0.2);
@@ -96,6 +121,7 @@
         flex-shrink: 0;
         margin: 0 auto;
         margin-bottom: 14px;
+        position: relative;
         &.selected {
             border: 4px solid #90ee90;
         }
