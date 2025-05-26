@@ -2,14 +2,18 @@
     import { quadIn, quadOut, elasticOut } from "svelte/easing";
     import { fade, fly } from "svelte/transition";
 
-    const itemPics = import.meta.glob("./assets/items/*.{png,jpg,jpeg,svg}", {
+    const itemPics = import.meta.glob("../assets/items/*.{png,jpg,jpeg,svg}", {
         eager: true,
         as: "url",
     });
+    let { item, baseSpeed, closeItemShowcase } = $props();
 
-    let { item, image, baseSpeed, closeItemShowcase } = $props();
+    let itemSrc = $derived(itemPics[`../assets/items/${item.id}.png`])
 
-    let selectedRoom = $state();
+
+
+    $inspect({ itemPics });
+    // let image = $derived()
 </script>
 
 <div
@@ -28,12 +32,12 @@
     }}
 >
     <div class="room-selector-container">
-        <h1>Draft room</h1>
+        <h1>Secret found!</h1>
         <div class="room-container">
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-            <figure>
-                <img src={image.src} alt={image.alt} />
+            <figure class:big={item.id == "secret_door"}>
+                <img src={itemSrc} />
                 <figcaption>
                     <h2>{item.name}</h2>
                     <span style:font-style="italic"
@@ -44,8 +48,7 @@
         </div>
         <div class="button-container">
             <button
-                disabled={selectedRoom == undefined}
-                onclick={closeItemShowcase}>Confirm</button
+                onclick={closeItemShowcase}>Close</button
             >
         </div>
     </div>
@@ -85,7 +88,6 @@
     }
 
     figure {
-        cursor: pointer;
         border-radius: 4px;
         border: 1px solid #ccc;
         backdrop-filter: blur(22px);
@@ -96,6 +98,9 @@
         margin-bottom: 14px;
         &.selected {
             border: 4px solid #90ee90;
+        }
+        &.big {
+            width: 100%;
         }
     }
     figcaption {

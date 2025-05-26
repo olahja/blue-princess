@@ -63,7 +63,9 @@
         "desc": "A magical pathway to further rooms",
         "secrets": [
             {
-                "name": "test",
+                "id": "uv_light",
+                "name": "UV-light",
+                "desc": "Handy for finding hidden clues.",
                 "found": false,
                 "buttonPos": {
                     "top": "44%",
@@ -166,6 +168,18 @@
     "kitchen": {
         "name": "Kitchen",
         "desc": "Home of the new fridge",
+        "secrets": [
+            {
+                "id": "ice_key",
+                "name": "Ice Key",
+                "desc": "Opens frozen locks",
+                "found": false,
+                "buttonPos": {
+                    "top": "66%",
+                    "left": "95%"
+                }
+            }
+        ],
         "connections": [
             {
                 "direction": "back",
@@ -246,6 +260,21 @@
     "attic": {
         "name": "Attic",
         "desc": "Tires, moths and suitcases",
+        "secrets": [
+            {
+                "id": "secret_code",
+                "name": "Secret Code",
+                "uv_required": true,
+                "desc": "Opens coded locks",
+                "found": false,
+                "buttonPos": {
+                    "top": "33%",
+                    "left": "37%",
+                    "width": "115px",
+                    "height": "90px"
+                }
+            }
+        ],
         "connections": [
             {
                 "direction": "back",
@@ -262,6 +291,18 @@
     "basement": {
         "name": "Basement",
         "desc": "Jam and wine storage",
+        "secrets": [
+            {
+                "id": "secret_door",
+                "name": "Secret Door",
+                "desc": "What's behind it?",
+                "found": false,
+                "buttonPos": {
+                    "top": "51%",
+                    "left": "69%"
+                }
+            }
+        ],
         "connections": [
             {
                 "direction": "back",
@@ -278,6 +319,18 @@
     "workshop": {
         "name": "Workshop",
         "desc": "The sidekick's favourite",
+        "secrets": [
+            {
+                "id": "gem_key",
+                "name": "Gem Key",
+                "desc": "Opens fancy locks",
+                "found": false,
+                "buttonPos": {
+                    "top": "53%",
+                    "left": "26%"
+                }
+            }
+        ],
         "connections": [
             {
                 "direction": "back",

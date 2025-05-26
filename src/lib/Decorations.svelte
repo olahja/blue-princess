@@ -5,6 +5,7 @@
         roomData,
         updateRoomData,
         updateDraftSettings,
+        inventory,
         updateSelectedRoom,
         getItem
     } = $props();
@@ -31,11 +32,14 @@
     >
 {/each}
 {#each secrets as s}
-    {#if !s.found}
+    {#if !s.found && ((s.uv_required && inventory.find(d => d.id == "uv_light")) || s.uv_required == undefined )}
+        <!-- svelte-ignore a11y_consider_explicit_label -->
         <button
             class="secret"
             style:top={s.buttonPos.top}
             style:left={s.buttonPos.left}
+            style:width={s.buttonPos.width || "40px"}
+            style:height={s.buttonPos.height || "40px"}
             onclick={() => getItem(s)}
         ></button>
     {/if}
@@ -49,7 +53,8 @@
         width: 40px;
         height: 40px;
         animation: pulse-glow 1.5s ease-in-out infinite;
-        background-color: rgba(255, 255, 255, 0.15);
+        background-color: rgba(255, 255, 255, 0.10);
+        border-radius: 50%;
     }
 
     @keyframes pulse-glow {

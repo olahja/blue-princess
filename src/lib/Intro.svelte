@@ -18,7 +18,8 @@
     }}
 >
     <img src={title} alt="Description of my image" />
-    <span>– a very short minigame</span>
+    <span>– the quest to find the eleventh room.</span>
+    <p style:opacity="0.4">(Best enjoyed in a couch)</p>
 </div>
 
 <style>

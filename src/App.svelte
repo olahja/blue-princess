@@ -7,6 +7,7 @@
   import _roomData from "./data/rooms.json";
   import Intro from "./lib/Intro.svelte";
   import ItemShowcaser from "./lib/ItemShowcaser.svelte";
+  import Inventory from "./lib/Inventory.svelte";
 
   import CharacterCreatorWrapper from "./lib/CharacterCreatorWrapper.svelte";
   import DraftWindow from "./lib/DraftWindow.svelte";
@@ -46,14 +47,18 @@
     as: "url",
   });
 
+  $inspect({ roomPics });
   let selectedRoom = $state("outside");
 
   let roomData = $state(_roomData);
+  let inventory = $state([]);
 
   let currentBackground = $derived(
     selectedRoom == "outside"
       ? background
-      : roomPics[`./assets/rooms/${selectedRoom}.png`],
+      : selectedRoom == "attic" && inventory.find((d) => d.id == "uv_light")
+        ? roomPics[`./assets/rooms/${selectedRoom}_uv.png`]
+        : roomPics[`./assets/rooms/${selectedRoom}.png`],
   );
   // $inspect({ rooms });
 
@@ -81,10 +86,13 @@
     selectedRoom = room;
   }
 
-  let inventory = $state([]);
   function getItem(item) {
-    roomData[selectedRoom].secrets.find((d) => d.id == item.id).found = true;
-    inventory.push(item);
+    if (item.id !== "secret_door")  {
+      roomData[selectedRoom].secrets.find((d) => d.id == item.id).found = true;
+      inventory.push(item);
+    }
+    
+    showcaseItem = item;
   }
 
   let showcaseItem = $state();
@@ -116,10 +124,14 @@
         {updateGameState}
       />
     {/if}
+    {#if inventory.length > 0}
+      <Inventory {inventory} />
+    {/if}
     {#if gameState.explore && !draftSettings}
       <Decorations
         {selectedRoom}
         {roomData}
+        {inventory}
         {updateRoomData}
         {updateDraftSettings}
         {updateSelectedRoom}
@@ -137,7 +149,7 @@
       />
     {/if}
     {#if showcaseItem}
-      <ItemShowcaser item={showcaseItem} {baseSpeed} />
+      <ItemShowcaser item={showcaseItem} {baseSpeed} {closeItemShowcase} />
     {/if}
   </div>
   <!-- </div> -->
