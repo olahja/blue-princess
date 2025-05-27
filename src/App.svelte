@@ -2,6 +2,8 @@
   import { quadIn, quadOut, elasticOut } from "svelte/easing";
   // import Test from "./Test.svelte";
   import background from "./assets/background/background_plain.png";
+  import { concurrent } from 'svelte-typewriter'
+  import final from "./assets/rooms/final/final.png";
   import { fade, fly } from "svelte/transition";
   import Decorations from "./lib/Decorations.svelte";
   import _roomData from "./data/rooms.json";
@@ -11,6 +13,7 @@
 
   import CharacterCreatorWrapper from "./lib/CharacterCreatorWrapper.svelte";
   import DraftWindow from "./lib/DraftWindow.svelte";
+    import Letter from "./lib/Letter.svelte";
 
   // let enterOpts = {
   //   inDelay: 1000,
@@ -18,7 +21,7 @@
   //   outDuration: 2000,
   // };
 
-  const baseSpeed = 100;
+  const baseSpeed = 1000;
 
   let enterOpts = {
     inDelay: baseSpeed * 2,
@@ -36,6 +39,8 @@
     promptBegin: false,
     begun: true,
     explore: false,
+    endGame: false,
+    // endGame: true,
   });
 
   function updateGameState(key, value) {
@@ -87,11 +92,11 @@
   }
 
   function getItem(item) {
-    if (item.id !== "secret_door")  {
+    if (item.id !== "secret_door") {
       roomData[selectedRoom].secrets.find((d) => d.id == item.id).found = true;
       inventory.push(item);
     }
-    
+
     showcaseItem = item;
   }
 
@@ -105,53 +110,77 @@
 
 <!-- <Test /> -->
 <main>
-  <div
-    class="background-container"
-    class:centered={selectedRoom == "kitchen"}
-    style:background-image="url({currentBackground})"
-  >
-    <!-- svelte-ignore a11y_img_redundant_alt -->
-
-    {#if !introOver}
-      <Intro {enterOpts} />
-    {/if}
-    <!-- <div class="cc-outer"> -->
-    {#if characterCreation.active}
-      <CharacterCreatorWrapper
-        {baseSpeed}
-        {characterCreation}
-        {enterOpts}
-        {updateGameState}
-      />
-    {/if}
-    {#if inventory.length > 0}
-      <Inventory {inventory} />
-    {/if}
-    {#if gameState.explore && !draftSettings}
-      <Decorations
-        {selectedRoom}
-        {roomData}
-        {inventory}
-        {updateRoomData}
-        {updateDraftSettings}
-        {updateSelectedRoom}
-        {getItem}
-      />
-    {/if}
-    {#if draftSettings}
-      <DraftWindow
-        {roomPics}
-        {draftSettings}
-        {baseSpeed}
-        {roomData}
-        confirmCallback={draftRoom}
-        {draftedRooms}
-      />
-    {/if}
-    {#if showcaseItem}
-      <ItemShowcaser item={showcaseItem} {baseSpeed} {closeItemShowcase} />
-    {/if}
+  {#if !gameState.endGame}
+    <div
+      out:fade|global={{
+        duration: baseSpeed * 4,
+        easing: quadOut,
+      }}
+      class="background-container"
+      class:centered={selectedRoom == "kitchen"}
+      style:background-image="url({currentBackground})"
+    >
+      <!-- svelte-ignore a11y_img_redundant_alt -->
+      {#if !introOver}
+        <Intro {enterOpts} />
+      {/if}
+      <!-- <div class="cc-outer"> -->
+      {#if characterCreation.active}
+        <CharacterCreatorWrapper
+          {baseSpeed}
+          {characterCreation}
+          {enterOpts}
+          {updateGameState}
+        />
+      {/if}
+      {#if inventory.length > 0}
+        <Inventory {inventory} />
+      {/if}
+      {#if gameState.explore && !draftSettings}
+        <Decorations
+          {selectedRoom}
+          {roomData}
+          {inventory}
+          {updateRoomData}
+          {updateDraftSettings}
+          {updateSelectedRoom}
+          {getItem}
+        />
+      {/if}
+      {#if draftSettings}
+        <DraftWindow
+          {roomPics}
+          {draftSettings}
+          {baseSpeed}
+          {roomData}
+          confirmCallback={draftRoom}
+          {draftedRooms}
+        />
+      {/if}
+      {#if showcaseItem}
+        <ItemShowcaser
+          item={showcaseItem}
+          {baseSpeed}
+          {closeItemShowcase}
+          {inventory}
+          {updateGameState}
+        />
+      {/if}
+    </div>
+    {:else}
+    <div
+      in:fade|global={{
+        duration: baseSpeed * 8,
+        delay: baseSpeed * 6,
+        easing: quadOut,
+      }}
+      class="background-container items-top"
+      class:centered={selectedRoom == "kitchen"}
+      style:background-image="url({final})"
+    >
+    <Letter {baseSpeed} />
   </div>
+  {/if}
   <!-- </div> -->
   {#if !introOver}
     <div
@@ -200,6 +229,7 @@
   {/if}
 </main>
 
+
 <style>
   main {
     /* padding-top: 60px; */
@@ -224,6 +254,9 @@
     align-items: center;
     justify-content: center;
     color: white;
+    &.items-top {
+      align-items:start;
+    }
   }
   .centered {
     background-position: right !important;

@@ -18,11 +18,15 @@
     }}
 >
     <img src={title} alt="Description of my image" />
-    <span>– the quest to find the eleventh room.</span>
-    <p style:opacity="0.4">(Best enjoyed in a couch)</p>
+    <span>– the quest to find the eleventh room</span>
+    <p style:opacity="0.4" style:margin-top={"300px;"}>(Best enjoyed on a couch)</p>
 </div>
 
 <style>
+    span {
+        font-family: 'Caveat', cursive;
+        font-size: 25px;
+    }
     .title {
         width: 100%;
         position: absolute;

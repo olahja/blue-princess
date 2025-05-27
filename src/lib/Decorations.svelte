@@ -53,7 +53,7 @@
         width: 40px;
         height: 40px;
         animation: pulse-glow 1.5s ease-in-out infinite;
-        background-color: rgba(255, 255, 255, 0.10);
+        background-color: rgba(255, 255, 255, 0.05);
         border-radius: 50%;
     }
 
